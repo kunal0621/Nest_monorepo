@@ -2,9 +2,9 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { Reflector } from '@nestjs/core';
-import { AuthProxyController } from './proxy-controlller/auth-proxy.controller';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { RolesGuard } from './roles.guard';
+import { AuthProxyController } from './proxy-controlller/auth-proxy.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MoviesProxyController } from './proxy-controlller/movies-proxy.controller';
 import { CommentsProxyController } from './proxy-controlller/comments-proxy.controller';
