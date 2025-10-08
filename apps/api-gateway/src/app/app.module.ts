@@ -2,12 +2,12 @@
 import { Module } from '@nestjs/common';
 import { APP_GUARD } from '@nestjs/core';
 import { Reflector } from '@nestjs/core';
-import { AppController } from './app.controller';
-import { AuthProxyController } from './auth-proxy.controller';
-import { AppService } from './app.service';
+import { AuthProxyController } from './proxy-controlller/auth-proxy.controller';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { RolesGuard } from './roles.guard';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { MoviesProxyController } from './proxy-controlller/movies-proxy.controller';
+import { CommentsProxyController } from './proxy-controlller/comments-proxy.controller';
 
 @Module({
   imports: [
@@ -24,11 +24,34 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
           },
         },
       },
+      {
+        name: 'MOVIES_SERVICE',
+        transport: Transport.KAFKA,
+        options: {
+          client: {
+            brokers: [process.env.KAFKA_BROKER || 'localhost:9092'],
+          },
+          consumer: {
+            groupId: 'api-gateway-movies-consumer-' + Math.random().toString(36).substring(7),
+          },
+        },
+      },
+      {
+        name: 'COMMENTS_SERVICE',
+        transport: Transport.KAFKA,
+        options: {
+          client: {
+            brokers: [process.env.KAFKA_BROKER || 'localhost:9092'],
+          },
+          consumer: {
+            groupId: 'api-gateway-comments-consumer-' + Math.random().toString(36).substring(7),
+          },
+        },
+      },
     ]),
   ],
-  controllers: [AppController, AuthProxyController],
+  controllers: [AuthProxyController, MoviesProxyController, CommentsProxyController],
   providers: [
-    AppService,
     Reflector,
     {
       provide: APP_GUARD,

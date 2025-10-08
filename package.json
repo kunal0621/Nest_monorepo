@@ -2,7 +2,15 @@
   "name": "@movie-site/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "start:auth:http": "node -r ts-node/register apps/auth/src/main.ts",
+    "start:auth:micro": "node -r ts-node/register apps/auth/src/micro-main.ts",
+    "start:gateway": "node -r ts-node/register apps/api-gateway/src/main.ts",
+    "start:movies:http": "node -r ts-node/register apps/movies/src/main.ts",
+    "start:movies:micro": "node -r ts-node/register apps/movies/src/micro-main.ts",
+    "start:comments:http": "node -r ts-node/register apps/comments/src/main.ts",
+    "start:comments:micro": "node -r ts-node/register apps/comments/src/micro-main.ts"
+  },
   "private": true,
   "dependencies": {
     "@nestjs/common": "^11.0.0",

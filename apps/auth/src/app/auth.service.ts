@@ -14,7 +14,7 @@ export class AuthService {
     try {
       this.privateKey = fs.readFileSync(path.join(keyPath, 'private.pem'), 'utf8');
       this.publicKey = fs.readFileSync(path.join(keyPath, 'public.pem'), 'utf8');
-    } catch (e) {
+    } catch {
       // fallback to env or empty
       this.privateKey = process.env.JWT_PRIVATE_KEY || '';
       this.publicKey = process.env.JWT_PUBLIC_KEY || '';
@@ -44,8 +44,8 @@ export class AuthService {
     try {
       const pub = this.publicKey || process.env.JWT_PUBLIC_KEY || '';
       const payload = jwt.verify(token, pub, { algorithms: ['RS256'] });
-      return { active: true, ...((payload as any) || {}) };
-    } catch (err) {
+      return { active: true, ...(payload as Record<string, unknown>) };
+    } catch {
       return { active: false };
     }
   }

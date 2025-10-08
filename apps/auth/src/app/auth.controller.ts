@@ -33,8 +33,8 @@ export class AuthController {
 
   @MessagePattern('auth.login')
   async handleLogin(@Payload() data: { username: string; password: string }) {
-    const user = await this.authService['users'].validateUser(data.username, data.password);
+    const user = await this.users.validateUser(data.username, data.password);
     if (!user) return { error: 'invalid_credentials' };
-    return this.authService.login(user as any);
+    return this.authService.login(user);
   }
 }

@@ -16,7 +16,7 @@ async function bootstrap() {
   await app.listen(port);
   // start kafka microservice
   const kafkaBroker = process.env.KAFKA_BROKER || 'localhost:9092';
-  const microservice = app.connectMicroservice<MicroserviceOptions>({
+  app.connectMicroservice<MicroserviceOptions>({
     transport: Transport.KAFKA,
     options: {
       client: {
