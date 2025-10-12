@@ -1,10 +1,10 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app/app.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
+import { AuthModule } from './app/auth.module';
 
 async function bootstrap() {
   const kafkaBroker = process.env.KAFKA_BROKER || 'localhost:9092';
-  const app = await NestFactory.createMicroservice<MicroserviceOptions>(AppModule, {
+  const app = await NestFactory.createMicroservice<MicroserviceOptions>(AuthModule, {
     transport: Transport.KAFKA,
     options: {
       client: { brokers: [kafkaBroker] },

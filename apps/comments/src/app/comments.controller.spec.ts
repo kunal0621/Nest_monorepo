@@ -1,21 +1,21 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AppController } from './app.controller';
+import { CommentsController } from './comments.controller';
 import { AppService } from './app.service';
 
-describe('AppController', () => {
+describe('CommentsController', () => {
   let app: TestingModule;
 
   beforeAll(async () => {
     app = await Test.createTestingModule({
-      controllers: [AppController],
+      controllers: [CommentsController],
       providers: [AppService],
     }).compile();
   });
 
   describe('getData', () => {
     it('should return "Hello API"', () => {
-      const appController = app.get<AppController>(AppController);
-      expect(appController.getData()).toEqual({ message: 'Hello API' });
+      const commentsController = app.get<CommentsController>(CommentsController);
+      expect(commentsController.findAll()).toEqual({ message: 'Hello API' });
     });
   });
 });
